@@ -4,12 +4,26 @@ const loadCatagories = () =>{
     fetch(url)
     .then(res => res.json())
     .then(data =>{
-        // console.log(data.categories);
+        console.log(data.categories);
         const cataData = data.categories;
+
+        //1. get element
+
+        const sidebar = document.getElementById("sidebar");
 
         for(catagories of cataData){
             // console.log(catagories);
-            // console.log(catagories.category_name)
+            console.log(catagories.category_name);
+            const nameCatagory = catagories.category_name;
+
+             // 2.create element
+
+             const perCatagory = document.createElement("div");
+             perCatagory.innerHTML = `
+      <li><a class="hover:bg-[#15803D] hover:text-white text-[#1F2937] font-semibold text-[16px]">${nameCatagory}</a></li>`
+
+            sidebar.appendChild(perCatagory)
+
         }
     })
 }
@@ -28,15 +42,15 @@ const loadCards = () =>{
     const cardDiv = document.getElementById("tree_Cards");
 
         for(plants of plantData){
-            console.log(plants);
+            // console.log(plants);
 
             // 2.create element
             const card = document.createElement("div")
             card.innerHTML = `
-                               <div class="card bg-base-100 w-96 shadow-sm h-[500px]">
-  <figure class="">
-    <img class="p-5"
-      src="${plants.image}" />
+                               <div class="card bg-base-100 shadow-lg h-[500px]">
+  <figure class="rounded-lg">
+    <img class="p-5 w-full h-full object-cover"
+      src="${plants.image}"/>
   </figure>
   <div class="card-body">
     <h2 class="card-title">${plants.name}</h2>
