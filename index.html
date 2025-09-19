@@ -11,18 +11,67 @@
  <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+<!-- font awesome cdn -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 </head>
 <body>
-    <header>
-        <div class="flex justify-around items-center inter-font bg-[#15803D] h-17">
-            <h2 class="text-white font-bold text-xl">Green Earth</h2>
-            <ul class="flex gap-8 text-white font-medium">
+    <header class="">
+        <div class="flex flex-col md:flex-row justify-around items-center inter-font bg-[#15803D] py-5">
+            <h2 class="text-white font-bold text-lg ">Green Earth</h2>
+            <ul class="flex gap-8 text-white font-medium text-[11px] md:text-[16px]">
                 <li>About</li>
                 <li>Gallery</li>
                 <li>Plant a Tree</li>
             </ul>
-            <button class="p-3 rounded-[300px] bg-[#FACC15] font-medium text-[#15803D]">Plant A Tree</button>
+            <button class="py-1 md:2 px-4 rounded-[300px] bg-[#FACC15] font-medium text-[#15803D]">Plant A Tree</button>
         </div>
     </header>
+    <main class="bg-[#F0FDF4]">
+        <div class=" banner text-center py-30 mb-20 bg-[#CFF0DC] bg-[url(./assets/hero-leaf1.png),_url(./assets/hero-leaf2.png)] bg-no-repeat bg-[position:bottom_left,bottom_right] bg-[length:150px,150px] md:bg-[length:250px,250px] lg:bg-[length:450px,450px]">
+            <h1 class="text-5xl font-bold mb-2 w-[80%] m-auto">Plant a Tree, Grow a Future</h1>
+            <p class="text-[#1F2937] mb-6 [80%] m-auto">Join our mission to plant 1 million trees and make the Earth greener for future
+generations.</p>
+  <button class="py-2 px-4 rounded-[300px] bg-[#FACC15] font-medium text-[#15803D]">Get Involved</button>
+        </div>
+
+        <!--section -->
+
+        <section>
+            <h1 class="text-[32px] font-semibold text-center">Choose Your Trees</h1>
+            <div class="flex">
+                <div class="catagories" id="sidebar">
+                    <div class="drawer lg:drawer-open">
+  <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content flex flex-col items-center justify-center">
+    <!-- Page content here -->
+    <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">
+      Select Catagory
+    </label>
+  </div>
+  <div class="drawer-side">
+    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay text-[20px] font-semibold ">Catagories</label>
+    <ul class="menu bg-base-200 text-base-content min-h-full lg:min-h-9 w-80 p-4">
+      <!-- Sidebar content here -->
+      <li><a class="hover:bg-[#15803D]">Sidebar Item 1</a></li>
+      <li><a class="hover:bg-[#15803D]">Sidebar Item 2</a></li>
+    </ul>
+  </div>
+</div>
+                </div>
+
+                <div id="tree_Cards" class="tree_card grid grid-cols-3 gap-7">
+                </div>
+                <div class="cart">
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <script src="./script.js"></script>
 </body>
 </html>

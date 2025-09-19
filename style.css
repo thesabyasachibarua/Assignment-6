@@ -1,3 +1,7 @@
-.inter-font {
+.inter-font{
   font-family: "Inter", sans-serif;
+}
+
+.banner{
+    background-image: url(./assets/hero-leaf1.png);
 }
