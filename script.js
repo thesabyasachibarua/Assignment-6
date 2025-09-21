@@ -1,3 +1,5 @@
+// total value array
+let savedData = [];
 
 const loadCatagories = () =>{
     const url = "https://openapi.programming-hero.com/api/categories";
@@ -47,7 +49,7 @@ const filterCatagory = (catId) =>{
     .then(res => res.json())
     .then( data => {
         const clickedCat = data.plants;
-         console.log(clickedCat);
+        //  console.log(clickedCat);
 
         //  get the element
       const mainCardDiv =  document.getElementById("tree_Cards");
@@ -91,7 +93,7 @@ const loadCards = () =>{
       src="${plants.image}"/>
   </figure>
   <div class="card-body">
-    <h2 onclick = "plantDetails(${plants})"   class="card-title">${plants.name}</h2>
+    <h2 onclick ="plantDetails(${plants.id})"   class="card-title">${plants.name}</h2>
     <p>${plants.description}</p>
 <div class="flex justify-between items-center mb-3">
     <button class="bg-[#DCFCE7] p-2 rounded-xl text-[#15803D] font-semibold">${plants.category}</button>
@@ -129,16 +131,72 @@ const loadCart = (cartId) =>{
         // 2.create element
         const cartChild = document.createElement("div");
         cartChild.innerHTML = `
-        <div id="${cartData.id}" class="bg-[#F0FDF4] p-2 flex items-center justify-between w-[95%] m-auto rounded-lg">
+        <div class="bg-[#F0FDF4] p-2 flex items-center justify-between w-[95%] m-auto rounded-lg">
                             <div>
                             <h3 class="font-semibold">${cartData.name}</h3>
                             <h4><span><i class="fa-solid fa-bangladeshi-taka-sign"></i></span>${cartData.price} <span> x 1</span></h4>
                             </div>
-                            <i onclick="removeCart(${cartData.id})" class="fa-solid fa-xmark"></i>
+                            <i id="${cartData.id}" onclick="removeCart(${cartData.id})" class="fa-solid fa-xmark"></i>
                         </div>`
             //   3.append child 
             cartdiv.appendChild(cartChild);
+
+            totalCart(cartData.id);
     })
+}
+
+// total adding function
+
+const totalCart = (value) =>{
+    // const cartIdForTotal = document.getElementById(data);
+    // console.log(data);
+
+ function getTotal(){
+        const url = `https://openapi.programming-hero.com/api/plant/${value}`;
+    fetch(url)
+    .then(res => res.json())
+    .then(data =>{
+        // console.log(data.plants.price);
+        const cartValue = data.plants.price;
+        savedData.push(cartValue);
+        // console.log(savedData);
+        totalCartPrice();
+    }
+)
+ }
+ getTotal();
+    
+    const totalCartPrice = () =>{
+        let sum = 0;
+        for(const val of savedData){
+         sum = val + sum;
+        }
+        console.log(sum);
+        // return sum;
+    }
+    
+    // totalCartPrice();
+    //1. get the element
+    const parentValue = document.getElementById("total_price");
+    parentValue.innerHTML = "";
+    // 2.create element
+    const totalValue = document.createElement("div")
+    totalValue.innerHTML = `
+        <div>
+                            <hr class="mt-3 w-full mx-auto ">
+                            <div class="flex justify-between items-center">
+                                 <h2 class="font-bold">
+                                Total:
+                            </h2>
+                            <h3><i class="fa-solid fa-bangladeshi-taka-sign"></i><span>${value}</span></h3>
+                            </div>
+                        </div>`
+
+                        // 3.append child
+                        parentValue.appendChild(totalValue);
+
+
+    
 }
 
 // remove per item from cart
@@ -147,8 +205,12 @@ const removeCart = (cartDataId) =>{
     console.log(cartDataId);
 
     const specificCart = document.getElementById(cartDataId);
+    // console.log(specificCart);
 
-    // specificCart.innerHTML = "";
+    specificCart.parentElement.remove();
+
+    specificCart.parentElement.innerHTML = "";
+    // specificCart.classList.add("hidden");
 }
 
 
@@ -159,33 +221,45 @@ const removeCart = (cartDataId) =>{
 // modal on clicking the tree name on card
 
 const plantDetails = (details) =>{
-    console.log(details);
-    console.log("tree name clicked");
-    //   const modalShow = document.getElementById("my_modal_1");
+    // console.log(details);
 
-    // const detailsContainer = document.getElementById("modal_Show");
-    // detailsContainer.innerHTML = `
-    //  <div class="space-y-4">
-    //      <div class="font-bold text-xl">
-    //         <h2>${details.name}</h2>
-    //     </div>
-    //     <div>
-    //        <img class="p-5 w-full h-full object-cover"
-    //   src="${details.image}"/>
-    //     </div>
-    //     <div>
-    //        <h3 class="font-bold">Catagory: <span>${details.category}</span></h3>
-    //     </div>
-    //     <div>
-    //        <h3 class="font-bold">Price:<i class="fa-solid fa-bangladeshi-taka-sign"></i> <span>${details.price}</span></h3>
-    //     </div>
-    //     <div>
-    //        <h3 class="font-bold">Description:<span>${details.description}</span></h3>
-    //         </div>
-    //     </div>
-    // </div>`;
-    // // modalShow.innerHTML = "Hi I am the modal";
+    const url = `https://openapi.programming-hero.com/api/plant/${details}`;
+    fetch(url)
+    .then(res => res.json())
+    .then(data =>{
+        console.log(data.plants);
+        const modalData = data.plants;
 
-    //  modalShow.showModal();
+        // console.log("tree name clicked");
+      const modalShow = document.getElementById("my_modal_1");
+
+    const detailsContainer = document.getElementById("modal_Show");
+    detailsContainer.innerHTML = `
+     <div class="space-y-2">
+         <div class="font-bold text-xl">
+            <h2>${modalData.name}</h2>
+        </div>
+        <div>
+           <img class="p-5 w-full h-[300px] object-cover"
+      src="${modalData.image}"/>
+        </div>
+        <div>
+           <h3 class="font-bold">Catagory:</h3>
+           <span>${modalData.category}</span>
+        </div>
+        <div>
+           <h3 class="font-bold">Price:<i class="fa-solid fa-bangladeshi-taka-sign"></i></h3>
+           <span>${modalData.price}</span>
+        </div>
+        <div>
+           <h3 class="font-bold">Description:</h3>
+           <span>${modalData.description}</span>
+            </div>
+        </div>
+    </div>`
+
+     modalShow.showModal();
+    })
+    
 }
 
