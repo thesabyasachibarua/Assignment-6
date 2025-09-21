@@ -5,3 +5,8 @@
 *{
     background-color: #CFF0DC;
 }
+
+.activeNow{
+    background-color: #15803D;
+    color: white;
+}

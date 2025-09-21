@@ -30,7 +30,7 @@ const showCatagories = (cataArray) =>{
 
              const perCatagory = document.createElement("div");
              perCatagory.innerHTML = `
-      <li><a onclick="filterCatagory('${idCatagory}')" class="hover:bg-[#15803D] hover:text-white text-[#1F2937] font-semibold text-[16px]">${nameCatagory}</a></li>`
+      <li ><a id="btn-catagory" onclick="filterCatagory('${idCatagory}')" class="hover:bg-[#15803D] hover:text-white text-[#1F2937] font-semibold text-[16px]">${nameCatagory}</a></li>`
 
             sidebar.appendChild(perCatagory)
 
@@ -38,6 +38,9 @@ const showCatagories = (cataArray) =>{
         }
 
 loadCatagories();
+
+// active catagory function
+
 
 //onclick filter cards by catagory function
 
@@ -49,13 +52,16 @@ const filterCatagory = (catId) =>{
     .then(res => res.json())
     .then( data => {
         const clickedCat = data.plants;
-        //  console.log(clickedCat);
-
         //  get the element
       const mainCardDiv =  document.getElementById("tree_Cards");
       mainCardDiv.innerHTML = "";
          showCards(clickedCat);
+
+         const buttonCatagory = document.getElementById("btn-catagory");
+    // buttonCatagory.classList.add("activeNow");
+       console.log(buttonCatagory);
     })
+
 }
 // onclick all trees
  const allTree = () =>{
@@ -93,7 +99,7 @@ const loadCards = () =>{
       src="${plants.image}"/>
   </figure>
   <div class="card-body">
-    <h2 onclick ="plantDetails(${plants.id})"   class="card-title">${plants.name}</h2>
+    <h2 onclick ="plantDetails(${plants.id})"   class="card-title cursor-pointer">${plants.name}</h2>
     <p>${plants.description}</p>
 <div class="flex justify-between items-center mb-3">
     <button class="bg-[#DCFCE7] p-2 rounded-xl text-[#15803D] font-semibold">${plants.category}</button>
@@ -240,20 +246,20 @@ const plantDetails = (details) =>{
             <h2>${modalData.name}</h2>
         </div>
         <div>
-           <img class="p-5 w-full h-[300px] object-cover"
+           <img class=" w-full h-[250px] object-cover"
       src="${modalData.image}"/>
         </div>
         <div>
            <h3 class="font-bold">Catagory:</h3>
-           <span>${modalData.category}</span>
+           <span class="text-[15px]">${modalData.category}</span>
         </div>
         <div>
            <h3 class="font-bold">Price:<i class="fa-solid fa-bangladeshi-taka-sign"></i></h3>
-           <span>${modalData.price}</span>
+           <span class="text-[15px]">${modalData.price}</span>
         </div>
         <div>
            <h3 class="font-bold">Description:</h3>
-           <span>${modalData.description}</span>
+           <span class="text-[15px]">${modalData.description}</span>
             </div>
         </div>
     </div>`
