@@ -46,9 +46,13 @@ generations.</p>
         <section class="mb-28">
             <h1 class="text-[32px] font-semibold text-center mb-10">Choose Your Trees</h1>
 
-            <div class="flex justify-around flex-col lg:flex-row gap-4 w-[95%] m-auto">
+            <section id="spinner" class="flex justify-center items-center py-14 hidden">
+                <span class="loading loading-dots loading-xl"></span>
+            </section>
 
-            <div class="">
+            <div id="mainSection" class="flex justify-around flex-col lg:flex-row gap-4 w-[95%] m-auto">
+
+            <div id="sideCatagory" class="">
                  <div class="drawer lg:drawer-open">
   <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content flex flex-col items-center justify-center">
@@ -66,6 +70,10 @@ generations.</p>
          </div>
              </div>
             </div>
+
+            <section id="spinner2" class="flex flex-row justify-center items-center hidden">
+                <span class="loading loading-dots loading-xl"></span>
+            </section>
 
             <div id="tree_Cards" class="tree_card grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 w-full mx-auto">
             </div>
