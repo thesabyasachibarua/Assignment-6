@@ -28,7 +28,7 @@ const showCatagories = (cataArray) =>{
 
              const perCatagory = document.createElement("div");
              perCatagory.innerHTML = `
-      <li ><a id="btn-catagory-${idCatagory}" onclick="filterCatagory(${idCatagory})" class="hover:bg-[#15803D] hover:text-white text-[#1F2937] font-semibold text-[16px] class_active">${nameCatagory}</a></li>`
+      <li ><a id="btn-catagory-${idCatagory}" onclick="filterCatagory(${idCatagory})" class="hover:bg-[#15803D] hover:text-white text-[#1F2937] font-semibold text-[16px] class_active mb-2">${nameCatagory}</a></li>`
 
             sidebar.appendChild(perCatagory)
 
@@ -78,6 +78,9 @@ const removeClass = () =>{
     const mainCardDiv =  document.getElementById("tree_Cards");
       mainCardDiv.innerHTML = "";
     loadCards();
+    removeClass();
+    const allTreeClass = document.getElementById("allTreeId");
+    allTreeClass.classList.add("activeNow");
  }
 
 // load All Cards
