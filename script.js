@@ -1,5 +1,3 @@
-// total value array
-let savedData = [];
 
 const loadCatagories = () =>{
     const url = "https://openapi.programming-hero.com/api/categories";
@@ -30,7 +28,7 @@ const showCatagories = (cataArray) =>{
 
              const perCatagory = document.createElement("div");
              perCatagory.innerHTML = `
-      <li ><a id="btn-catagory" onclick="filterCatagory('${idCatagory}')" class="hover:bg-[#15803D] hover:text-white text-[#1F2937] font-semibold text-[16px]">${nameCatagory}</a></li>`
+      <li ><a id="btn-catagory-${idCatagory}" onclick="filterCatagory(${idCatagory})" class="hover:bg-[#15803D] hover:text-white text-[#1F2937] font-semibold text-[16px] class_active">${nameCatagory}</a></li>`
 
             sidebar.appendChild(perCatagory)
 
@@ -43,7 +41,6 @@ loadCatagories();
 
 
 //onclick filter cards by catagory function
-
 const filterCatagory = (catId) =>{
     // console.log(catId);
     const url = `https://openapi.programming-hero.com/api/category/${catId}`
@@ -57,12 +54,25 @@ const filterCatagory = (catId) =>{
       mainCardDiv.innerHTML = "";
          showCards(clickedCat);
 
-         const buttonCatagory = document.getElementById("btn-catagory");
-    // buttonCatagory.classList.add("activeNow");
-       console.log(buttonCatagory);
+         removeClass();
+         const buttonCatagory = document.getElementById(`btn-catagory-${catId}`);
+    buttonCatagory.classList.add("activeNow");
+    //    console.log(buttonCatagory);
+    
     })
 
 }
+// remove activeNow class
+const removeClass = () =>{
+    const buttonClass = document.getElementsByClassName("class_active");
+    // console.log(buttonClass);
+    for(btn of buttonClass){
+        // console.log(btn);
+        btn.classList.remove("activeNow");
+        
+    }
+}
+
 // onclick all trees
  const allTree = () =>{
     const mainCardDiv =  document.getElementById("tree_Cards");
@@ -81,6 +91,14 @@ const loadCards = () =>{
     // console.log(plantData);
 
     })
+
+       // get the element
+        const cart = document.getElementById("carts");
+        // console.log(cart.children.length);
+        if(cart.children.length == 0){
+           const totDiv = document.getElementById("total_price");
+           totDiv.classList.add("hidden");
+        }
 }
 
 // showing card function
@@ -115,6 +133,13 @@ const loadCards = () =>{
 
             cardDiv.appendChild(card);
 
+        }
+         // get the element
+        const cart = document.getElementById("carts");
+        // console.log(cart.children.length);
+        if(cart.children.length == 0){
+           const totDiv = document.getElementById("total_price");
+           totDiv.classList.add("hidden");
         }
     }
 
@@ -151,72 +176,75 @@ const loadCart = (cartId) =>{
     })
 }
 
-// total adding function
 
+// total adding function
 const totalCart = (value) =>{
     // const cartIdForTotal = document.getElementById(data);
     // console.log(data);
 
- function getTotal(){
-        const url = `https://openapi.programming-hero.com/api/plant/${value}`;
-    fetch(url)
-    .then(res => res.json())
-    .then(data =>{
-        // console.log(data.plants.price);
-        const cartValue = data.plants.price;
-        savedData.push(cartValue);
-        // console.log(savedData);
-        totalCartPrice();
-    }
-)
- }
- getTotal();
-    
-    const totalCartPrice = () =>{
-        let sum = 0;
-        for(const val of savedData){
-         sum = val + sum;
+ async function getTotal(){
+
+    const res = await fetch(`https://openapi.programming-hero.com/api/plant/${value}`)
+
+    const data = await res.json()
+    const cartValue = data.plants.price;
+        // console.log(cartValue);
+
+        // get the element
+        const cart = document.getElementById("carts");
+        // console.log(cart.children.length);
+        if(cart.children.length > 0){
+           const totDiv = document.getElementById("total_price");
+           totDiv.classList.remove("hidden");
         }
-        console.log(sum);
-        // return sum;
-    }
-    
-    // totalCartPrice();
-    //1. get the element
-    const parentValue = document.getElementById("total_price");
-    parentValue.innerHTML = "";
-    // 2.create element
-    const totalValue = document.createElement("div")
-    totalValue.innerHTML = `
-        <div>
-                            <hr class="mt-3 w-full mx-auto ">
-                            <div class="flex justify-between items-center">
-                                 <h2 class="font-bold">
-                                Total:
-                            </h2>
-                            <h3><i class="fa-solid fa-bangladeshi-taka-sign"></i><span>${value}</span></h3>
-                            </div>
-                        </div>`
-
-                        // 3.append child
-                        parentValue.appendChild(totalValue);
 
 
+                        // get the value
+                         const cartTotalSpan = document.getElementById("cart_span");
+                        //  console.log(cartTotalSpan.innerText)
+                         const num = parseInt(cartTotalSpan.innerText);
+                        // const cartInner = cartTotalSpan.innerText;
+                        // console.log(num);
+                        cartTotalSpan.innerText = `${num + cartValue}`;                   
+        
+ }
+ getTotal();  
+}
+
+// adding total function
+
+const addCartTotal = (data) =>{
     
 }
 
 // remove per item from cart
 
 const removeCart = (cartDataId) =>{
-    console.log(cartDataId);
 
     const specificCart = document.getElementById(cartDataId);
     // console.log(specificCart);
 
     specificCart.parentElement.remove();
-
     specificCart.parentElement.innerHTML = "";
-    // specificCart.classList.add("hidden");
+    minusTotal(cartDataId);
+}
+
+const minusTotal = (id) =>{
+    const url = `https://openapi.programming-hero.com/api/plant/${id}`
+    fetch(url)
+    .then(res => res.json())
+    .then(data =>{
+        // console.log(data.plants.price);
+        const priceData = data.plants.price;
+
+        // get the element
+        const cartSpan = document.getElementById("cart_span");
+        // console.log(cartSpan.innerText);
+        const cartInnerText = cartSpan.innerText;
+        cartSpan.innerText = `${cartInnerText - priceData}`;
+        
+    
+    })
 }
 
 
